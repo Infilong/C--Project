@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include "OrderBookEntry.h"
 
 std::vector<std::string> tokenise(std::string csvLine, char separator)
 {
@@ -42,7 +43,7 @@ int main()
 
     std::string timeStamp;
     std::string tradingPair;
-    std::string orderType;
+    OrderBookType orderType;
     double price;
     double amount;
 
@@ -77,7 +78,7 @@ int main()
         {
             timeStamp = tokens[0];
             tradingPair = tokens[1];
-            orderType = tokens[2];
+            OrderBookType orderType = OrderBookEntry::stringToOrderBookType(tokens[2]);
             price = std::stod(tokens[3]);
             amount = std::stod(tokens[4]);
         }
@@ -90,7 +91,7 @@ int main()
         std::cout << "Read " << tokens.size() << " tokens " << std::endl;
         std::cout << "Line " << lineCount << " : " << timeStamp << "\n"
                   << tradingPair << "\n"
-                  << orderType << "\n"
+                //   << orderType << "\n"
                   << price << "\n"
                   << amount << std::endl;
     }

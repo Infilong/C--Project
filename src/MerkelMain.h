@@ -6,7 +6,7 @@ class MerkelMain
 {
 public:
     MerkelMain() = default;
-    /** Call this to start the sim */
+    /** Call this to start the application */
     void init();
 
 private:
@@ -21,6 +21,7 @@ private:
     void invalidChoice();
     void processUserOption();
     int getUserOption();
+
     double computeAveragePrice(std::vector<OrderBookEntry> &entries);
     double computeLowPrice(std::vector<OrderBookEntry> &entries);
     double computeHighPrice(std::vector<OrderBookEntry> &entries);

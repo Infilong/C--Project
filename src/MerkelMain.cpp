@@ -1,4 +1,5 @@
 #include "MerkelMain.h"
+#include "CSVReader.h"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -6,25 +7,24 @@
 void MerkelMain::init()
 {
     loadOrderBook();
-    int input;
     while (true)
     {
         printMenu();
-
         processUserOption();
     }
 }
-/** load up some dummy data for now */
+
 void MerkelMain::loadOrderBook()
 {
-    OrderBookEntry obe1("2020/03/17 17:01:24", "ETH/BTC", OrderBookType::bid, 0.02187308, 0.44564869);
-    OrderBookEntry obe2("2020/03/17 17:01:24", "ETH/BTC", OrderBookType::ask, 0.02189308, 0.44564869);
-
-    orders.push_back(obe1);
-    orders.push_back(obe2);
-    for (auto &entry : orders)
+    orders = CSVReader::readCSV("src/tradingData.csv");
+    std::cout << "MerkelMain::loadOrderBook read " << orders.size() << " orders" << std::endl;
+    for (auto &order : orders)
     {
-        std::cout << entry.price << std::endl;
+        std::cout << "Timestamp: " << order.timestamp << "\n"
+                  << "Product: " << order.product << "\n"
+                  << "Price: " << order.price << "\n"
+                  << "Amount: " << order.amount << "\n";
+        //   << "Type: " << entry.type << "\n"; entry.type is not string
     }
 }
 
