@@ -22,7 +22,8 @@ private:
     void processUserOption();
     int getUserOption();
     OrderBook orderBook{"src/tradingData.csv"};
-
+    std::string currentTime;
+    void gotoNextTimeframe();
 
     // A vector is a sequence container that can dynamically grow or shrink in size.
     // It's similar to an array, but with the ability to resize itself automatically as elements are inserted or removed.

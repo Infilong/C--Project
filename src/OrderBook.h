@@ -19,6 +19,9 @@ public:
     /** return the price of the lowest bid in the sent set */
     static double getLowPrice(std::vector<OrderBookEntry> &orders);
 
+    std::string getEarliestTime();
+    std::string getNextTime(const std::string &timestamp);
+
 private:
     std::vector<OrderBookEntry> orders;
 };

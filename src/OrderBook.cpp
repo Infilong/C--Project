@@ -69,3 +69,34 @@ double OrderBook::getLowPrice(std::vector<OrderBookEntry> &orders)
     }
     return low;
 }
+
+std::string OrderBook::getEarliestTime()
+{
+    OrderBookEntry earliest = orders[0];
+    for (const OrderBookEntry &e : orders)
+    {
+        if (e.timestamp < earliest.timestamp)
+        {
+            earliest = e;
+        }
+    }
+    return earliest.timestamp;
+}
+
+std::string OrderBook::getNextTime(const std::string &timestamp)
+{
+    std::string nextTime{""};
+    for (OrderBookEntry e : orders)
+    {
+        if (e.timestamp > timestamp)
+        {
+            nextTime = e.timestamp;
+            break;
+        }
+    }
+    if (nextTime == "")
+    {
+        nextTime = orders[0].timestamp;
+    }
+    return nextTime;
+}

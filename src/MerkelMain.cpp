@@ -6,11 +6,12 @@
 
 void MerkelMain::init()
 {
+    currentTime = orderBook.getEarliestTime();
     while (true)
     {
         printMenu();
         processUserOption();
-    }
+        }
 }
 
 void MerkelMain::printMenu()
@@ -38,7 +39,8 @@ void MerkelMain::printHelp()
 void MerkelMain::printExchangeStats()
 {
     std::cout << "You selected 'Print exchange stats'" << std::endl;
-    std::string currentTime = "2020/03/17 17:01:24.884492";
+    std::cout << "Current time: " << currentTime << std::endl;
+
     for (const std::string &p : orderBook.getKnownProducts())
     {
         std::cout << "Product: " << p << std::endl;
@@ -47,6 +49,7 @@ void MerkelMain::printExchangeStats()
         std::cout << "Max ask: " << OrderBook::getHighPrice(entries) << std::endl;
         std::cout << "Min ask: " << OrderBook::getLowPrice(entries) << std::endl;
     }
+    currentTime = orderBook.getNextTime(currentTime);
 }
 
 void MerkelMain::placeAsk()
@@ -93,4 +96,10 @@ void MerkelMain::processUserOption()
     {
         invalidChoice();
     }
+}
+
+void MerkelMain::gotoNextTimeframe()
+{
+    std::cout << "Goto next timeframe" << std::endl;
+    currentTime = orderBook.getNextTime(currentTime);
 }
