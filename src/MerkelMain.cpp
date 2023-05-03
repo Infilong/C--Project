@@ -6,25 +6,10 @@
 
 void MerkelMain::init()
 {
-    loadOrderBook();
     while (true)
     {
         printMenu();
         processUserOption();
-    }
-}
-
-void MerkelMain::loadOrderBook()
-{
-    orders = CSVReader::readCSV("src/tradingData.csv");
-    std::cout << "MerkelMain::loadOrderBook read " << orders.size() << " orders" << std::endl;
-    for (auto &order : orders)
-    {
-        std::cout << "Timestamp: " << order.timestamp << "\n"
-                  << "Product: " << order.product << "\n"
-                  << "Price: " << order.price << "\n"
-                  << "Amount: " << order.amount << "\n";
-        //   << "Type: " << entry.type << "\n"; entry.type is not string
     }
 }
 
@@ -53,6 +38,15 @@ void MerkelMain::printHelp()
 void MerkelMain::printExchangeStats()
 {
     std::cout << "You selected 'Print exchange stats'" << std::endl;
+    std::string currentTime = "2020/03/17 17:01:24.884492";
+    for (const std::string &p : orderBook.getKnownProducts())
+    {
+        std::cout << "Product: " << p << std::endl;
+        std::vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookType::ask, p, currentTime);
+        std::cout << "Asks seen: " << entries.size() << std::endl;
+        std::cout << "Max ask: " << OrderBook::getHighPrice(entries) << std::endl;
+        std::cout << "Min ask: " << OrderBook::getLowPrice(entries) << std::endl;
+    }
 }
 
 void MerkelMain::placeAsk()
@@ -99,46 +93,4 @@ void MerkelMain::processUserOption()
     {
         invalidChoice();
     }
-}
-
-double MerkelMain::computeAveragePrice(std::vector<OrderBookEntry> &entries)
-{
-    double sum{};
-    for (auto &entry : entries)
-    {
-        double sum = sum + entry.price;
-    }
-    return sum / entries.size();
-}
-
-double MerkelMain::computeLowPrice(std::vector<OrderBookEntry> &entries)
-{
-    double lowestPrice{entries[0].price};
-    for (auto &entry : entries)
-    {
-        if (lowestPrice > entry.price)
-        {
-            lowestPrice = entry.price;
-        }
-    }
-    return lowestPrice;
-}
-
-double MerkelMain::computeHighPrice(std::vector<OrderBookEntry> &entries)
-{
-    double highestPrice{entries[0].price};
-    for (auto &entry : entries)
-    {
-        if (highestPrice < entry.price)
-        {
-            highestPrice = entry.price;
-        }
-    }
-    return highestPrice;
-}
-
-double MerkelMain::computePriceSpread(std::vector<OrderBookEntry> &entries)
-{
-    double priceSpread{computeHighPrice(entries) - computeLowPrice(entries)};
-    return priceSpread;
 }

@@ -7,5 +7,4 @@ int main()
 {
     MerkelMain app{};
     app.init();
-    //CSVReader::readCSV("src/tradingData.csv");
 }
