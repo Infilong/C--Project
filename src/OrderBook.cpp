@@ -70,6 +70,17 @@ double OrderBook::getLowPrice(std::vector<OrderBookEntry> &orders)
     return low;
 }
 
+double OrderBook::getAveragePrice(std::vector<OrderBookEntry> &orders)
+{
+    double sum{0};
+    unsigned int count{0};
+    for (const OrderBookEntry &e : orders){
+        sum = sum  + e.price;
+        count++;
+    }
+    return sum/count;
+}
+
 std::string OrderBook::getEarliestTime()
 {
     OrderBookEntry earliest = orders[0];

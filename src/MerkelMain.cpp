@@ -11,7 +11,7 @@ void MerkelMain::init()
     {
         printMenu();
         processUserOption();
-        }
+    }
 }
 
 void MerkelMain::printMenu()
@@ -48,6 +48,7 @@ void MerkelMain::printExchangeStats()
         std::cout << "Asks seen: " << entries.size() << std::endl;
         std::cout << "Max ask: " << OrderBook::getHighPrice(entries) << std::endl;
         std::cout << "Min ask: " << OrderBook::getLowPrice(entries) << std::endl;
+        std::cout << "Average ask: " << OrderBook::getAveragePrice(entries) << std::endl;
     }
     currentTime = orderBook.getNextTime(currentTime);
 }
