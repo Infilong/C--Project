@@ -15,7 +15,7 @@ std::vector<OrderBookEntry> CSVReader::readCSV(std::string csvFilename)
 
     if (csvFile.is_open())
     {
-        std::cout << "Opened file: "<< csvFilename << std::endl;
+        std::cout << "Opened file: " << csvFilename << std::endl;
         while (std::getline(csvFile, line))
         {
             // Check if line is empty
@@ -105,5 +105,33 @@ OrderBookEntry CSVReader::stringsToOBE(std::vector<std::string> tokens)
         amount,
     };
 
+    return obe;
+}
+
+OrderBookEntry CSVReader::stringsToOBE(std::string timestamp,
+                                       std::string product,
+                                       OrderBookType type,
+                                       std::string _price,
+                                       std::string _amount)
+{
+    double price, amount;
+    try
+    {
+        price = std::stod(_price);
+        amount = std::stod(_amount);
+    }
+    catch (const std::exception &e)
+    {
+        std::cout << "CSVReader::stringsToOBE Bad float! " << _price << std::endl;
+        std::cout << "CSVReader::stringsToOBE Bad float! " << _amount << std::endl;
+        
+    }
+    OrderBookEntry obe{
+        timestamp,
+        product,
+        type,
+        price,
+        amount,
+    };
     return obe;
 }

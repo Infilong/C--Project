@@ -1,4 +1,6 @@
 #include "OrderBook.h"
+#include "OrderBookEntry.h"
+#include <algorithm>
 #include <map>
 
 OrderBook::OrderBook(std::string filename)
@@ -74,11 +76,12 @@ double OrderBook::getAveragePrice(std::vector<OrderBookEntry> &orders)
 {
     double sum{0};
     unsigned int count{0};
-    for (const OrderBookEntry &e : orders){
-        sum = sum  + e.price;
+    for (const OrderBookEntry &e : orders)
+    {
+        sum = sum + e.price;
         count++;
     }
-    return sum/count;
+    return sum / count;
 }
 
 std::string OrderBook::getEarliestTime()
@@ -110,4 +113,10 @@ std::string OrderBook::getNextTime(const std::string &timestamp)
         nextTime = orders[0].timestamp;
     }
     return nextTime;
+}
+
+void OrderBook::insertOrder(OrderBookEntry &order)
+{
+    orders.push_back(order);
+    std::sort(orders.begin(), orders.end(), OrderBookEntry::compareByTimestamp);
 }

@@ -14,16 +14,19 @@ private:
     void printMenu();
     void printHelp();
     void printExchangeStats();
-    void placeAsk();
-    void placeBid();
     void printWallet();
     void continueProgram();
     void invalidChoice();
     void processUserOption();
     int getUserOption();
+
     OrderBook orderBook{"src/tradingData.csv"};
     std::string currentTime;
     void gotoNextTimeframe();
+
+    void enterAsk();
+    void enterBid();
+    std::vector<std::string> checkAskBidInput(std::string input);
 
     // A vector is a sequence container that can dynamically grow or shrink in size.
     // It's similar to an array, but with the ability to resize itself automatically as elements are inserted or removed.
